@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Registration Page</title>
+</head>
+<body>
+  <div class="container">
+    <h2>Register</h2>
+
+    <form id="myForm">
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter username" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" placeholder="Re-enter password" required>
+      </div>
+
+      <!-- Message Box -->
+      <div>
+        <p id="error"></p>
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+  <script>
+    $("#myForm").on("submit", function(event) {
+      event.preventDefault();
+
+      let password = $("#password").val();
+      let confirmPassword = $("#confirm-password").val();
+      let errorBox = $("#error");
+      let errors = [];
+
+      // Validation rules
+      if (password.length < 8) {
+        errors.push("Password must be at least 8 characters long.");
+      }
+      if (password.length > 15) {
+        errors.push("Password must be no more than 15 characters long.");
+      }
+      if (!/[A-Z]/.test(password)) {
+        errors.push("Password must contain at least one uppercase letter.");
+      }
+      if (!/[a-z]/.test(password)) {
+        errors.push("Password must contain at least one lowercase letter.");
+      }
+      if (!/[0-9]/.test(password)) {
+        errors.push("Password must contain at least one number.");
+      }
+      if (!/[@$!%*?&]/.test(password)) {
+        errors.push("Password must contain at least one special character (@$!%*?&).");
+      }
+      if (password !== confirmPassword) {
+        errors.push("Passwords do not match.");
+      }
+
+      // Show results
+      if (errors.length > 0) {
+        errorBox.removeClass("success").addClass("error");
+        errorBox.html(errors.join("<br>"));
+      } else {
+        errorBox.removeClass("error").addClass("success");
+        errorBox.html("Registration successful!");
+      }
+    });
+  </script>
+</body>
+</html>
